@@ -1,3 +1,7 @@
+<?php
+include('includes/connect.php')
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -159,6 +163,21 @@
                             <h4>Derivery Brands</h4>
                         </a>
                     </li>
+                    <?php
+                        $select_brands = "SELECT brand_title FROM brands"; 
+                        $result_brands = mysqli_query($con, $select_brands);
+
+                        
+                        if ($result_brands) {
+                            // Fetch the data row by row
+                            while ($raw_data = mysqli_fetch_assoc($result_brands)) {
+                                echo $raw_data['brand_title'] . "<br>"; // Output each brand title
+                            }
+                        } else {
+                            echo "Error fetching brands: " . mysqli_error($con);
+                        }
+                    ?>
+
                     <li class="nav-item">
                         <a href="" class="nav-link text-light">Brand1</a>
                     </li>
