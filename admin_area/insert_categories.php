@@ -1,7 +1,18 @@
 <?php
-include('../includes/connect.php')
+include('../includes/connect.php');
+
 if(isset($_POST['insert_cart'])){
-    $category
+    $category_title=$_POST['cart_title'];
+
+  //select data from the database
+    $select_query="select * from 'categories' where category_title='$category_title'";
+    
+
+    $insert_query = "INSERT INTO categories (category_title) VALUES ('$category_title')";
+    $result=mysqli_query($con,$insert_query);
+    if($result){
+        echo "<script>alert('category has been inserted successfully')</script>";
+    }
 }
 ?>
 
