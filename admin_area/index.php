@@ -42,11 +42,11 @@
                 <p class="text-light text-center">Admin name</p>
             </div>
             <div class="button text-center">
-                <button class="my-3"><a href="" class="nav-link text-light bg-info my-1">Insert Products</a></button>
+                <button class="my-3"><a href="index.php?insert_product" class="nav-link text-light bg-info my-1">Insert Products</a></button>
                 <button><a href="" class="nav-link text-light bg-info my-1">View Products</a></button>
                 <button><a href="index.php?insert_category" class="nav-link text-light bg-info my-1">Insert Categories</a></button>
                 <button><a href="" class="nav-link text-light bg-info my-1">View Categories</a></button>
-                <button><a href="" class="nav-link text-light bg-info my-1">Insert Brands</a></button>
+                <button><a href="index.php?insert_brand" class="nav-link text-light bg-info my-1">Insert Brands</a></button>
                 <button><a href="" class="nav-link text-light bg-info my-1">View Brands</a></button>
                 <button><a href="" class="nav-link text-light bg-info my-1">All Orders</a></button>
                 <button><a href="" class="nav-link text-light bg-info my-1">All payments</a></button>
@@ -58,8 +58,16 @@
 
     <div class="container my-4">
         <?php
+         if(isset($_GET['insert_product'])) {
+            include('insert_products.php');
+        }
+
         if(isset($_GET['insert_category'])) {
             include('insert_categories.php');
+        }
+
+        if(isset($_GET['insert_brand'])) {
+            include('insert_brands.php');
         }
         ?>
     </div>
