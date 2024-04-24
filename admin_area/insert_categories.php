@@ -5,15 +5,20 @@ if(isset($_POST['insert_cart'])){
     $category_title=$_POST['cart_title'];
 
   //select data from the database
-    $select_query="select * from 'categories' where category_title='$category_title'";
-    
+  $select_query = "SELECT * FROM categories WHERE category_title='$category_title'";
+
+    $result_select= mysqli_query($con,$select_query);
+    $number=mysqli_num_rows($result_select);
+    if($number>0){
+        echo "<script>alert('the category is present in the database')</script>";
+    }else{
 
     $insert_query = "INSERT INTO categories (category_title) VALUES ('$category_title')";
     $result=mysqli_query($con,$insert_query);
     if($result){
         echo "<script>alert('category has been inserted successfully')</script>";
     }
-}
+    }}
 ?>
 
 <form action="" method="post" class="mb-2">
