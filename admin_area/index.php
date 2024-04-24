@@ -44,7 +44,7 @@
             <div class="button text-center">
                 <button class="my-3"><a href="" class="nav-link text-light bg-info my-1">Insert Products</a></button>
                 <button><a href="" class="nav-link text-light bg-info my-1">View Products</a></button>
-                <button><a href="" class="nav-link text-light bg-info my-1">Insert Categories</a></button>
+                <button><a href="index.php?insert_category" class="nav-link text-light bg-info my-1">Insert Categories</a></button>
                 <button><a href="" class="nav-link text-light bg-info my-1">View Categories</a></button>
                 <button><a href="" class="nav-link text-light bg-info my-1">Insert Brands</a></button>
                 <button><a href="" class="nav-link text-light bg-info my-1">View Brands</a></button>
@@ -54,6 +54,14 @@
                 <button><a href="" class="nav-link text-light bg-info my-1">Logout</a></button>
             </div>
         </div>
+    </div>
+
+    <div class="container my-4">
+        <?php
+        if(isset($_GET['insert_category'])) {
+            include('insert_categories.php');
+        }
+        ?>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
