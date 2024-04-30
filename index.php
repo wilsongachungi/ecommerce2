@@ -6,6 +6,22 @@ include('includes/connect.php')
 <html lang="en">
 
 <head>
+    <style>
+    .logo {
+        width: 7%;
+        height: 7%;
+    }
+    .card-img-top{
+    width: 100%;
+    height: 150px;
+    object-fit: contain;
+}
+
+    .admin_img {
+        width: 100px;
+        object-fit: contain;
+    }
+    </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ecommerce Website</title>
@@ -71,125 +87,68 @@ include('includes/connect.php')
             </p>
         </div>
 
-        <div class="row">
+        <div class="row px-4">
             <div class="col-md-10">
                 <div class="row">
-                    <div class="col-md-4">
-                        <div class="card">
-                            <img class="card-img-top" src="./img/chocholate.jpeg" alt="Card image cap">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk of the card's content.</p>
-                                <a href="#" class="btn btn-info">Add to Cart</a>
-                                <a href="#" class="btn btn-secondary">View More</a>
+
+                <?php
+                    $select_query="select *from `product_table`";
+                    $result_query=mysqli_query($con,$select_query);
+                    $row=mysqli_fetch_assoc($result_query);
+                   
+                    while($row=mysqli_fetch_assoc($result_query)){
+                        $product_id=$row['product_id'];
+                        $product_title=$row['product_title'];
+                        $product_description=$row['product_description'];
+                        $product_keywords=$row['product_keywords'];
+                        $product_image1=$row['product_image1'];
+                        $product_price=$row['product_price'];
+                        $brand_id=$row['brand_id'];
+                        $category_id=$row['category_id'];
+                        echo "  <div class='col-md-4 mb-2'>
+                       
+                        <div class='card'>
+                            <img class='card-img-top' src='./admin_area/product_images/$product_image1' alt='Card image cap'>
+                            <div class='card-body'>
+                                <h5 class='card-title'>$product_title</h5>
+                                <p> $product_description.</p>
+                                <a href='#' class='btn btn-info'>Add to Cart</a>
+                                <a href='#' class='btn btn-secondary'>View More</a>
                             </div>
                         </div>
-                    </div>
+                    </div>";
+                    }
+                ?>
 
-                    <div class="col-md-4 mb-2">
-                        <div class="card">
-                            <img class="card-img-top" src="./img/apple.jpeg" alt="Card image cap">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk of the card's content.</p>
-                                <a href="#" class="btn btn-info">Add to Cart</a>
-                                <a href="#" class="btn btn-secondary">View More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="card">
-                            <img class="card-img-top" src="./img/apple.jpeg" alt="Card image cap">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk of the card's content.</p>
-                                <a href="#" class="btn btn-info">Add to Cart</a>
-                                <a href="#" class="btn btn-secondary">View More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 mb-2">
-                        <div class="card">
-                            <img class="card-img-top" src="./img/apple.jpeg" alt="Card image cap">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk of the card's content.</p>
-                                <a href="#" class="btn btn-info">Add to Cart</a>
-                                <a href="#" class="btn btn-secondary">View More</a>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="col-md-4 mb-2">
-                        <div class="card">
-                            <img class="card-img-top" src="./img/apple.jpeg" alt="Card image cap">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk of the card's content.</p>
-                                <a href="#" class="btn btn-info">Add to Cart</a>
-                                <a href="#" class="btn btn-secondary">View More</a>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                    <div class="col-md-4">
-                        <div class="card">
-                            <img class="card-img-top" src="./img/capsicum.jpeg" alt="Card image cap">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk of the card's content.</p>
-                                <a href="#" class="btn btn-info">Add to Cart</a>
-                                <a href="#" class="btn btn-secondary">View More</a>
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
             <div class="col-md-2 bg-secondary p-0">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item bg-info text-center">
                         <a href="" class="nav-link text-light">
-                            <h4>Derivery Brands</h4>
+                            <h4>Derivery brands</h4>
                         </a>
                     </li>
-                    <?php
-                        $select_brands = "SELECT brand_title FROM brands"; 
-                        $result_brands = mysqli_query($con, $select_brands);
+                    <ul class="navbar-nav">
+                        <?php
+                            $select_brands = "SELECT brand_id, brand_title FROM brands"; 
+                            $result_brands = mysqli_query($con, $select_brands);
 
-                        
-                        if ($result_brands) {
-                            // Fetch the data row by row
-                            while ($raw_data = mysqli_fetch_assoc($result_brands)) {
-                                echo $raw_data['brand_title'] . "<br>"; // Output each brand title
+                            if ($result_brands) {
+                                while ($row_data = mysqli_fetch_assoc($result_brands)) {
+                                    $brand_id = $row_data['brand_id'];
+                                    $brand_title = $row_data['brand_title'];
+                                    echo '<li class="nav-item"><a href="index.php?brand=' . $brand_id . '" class="nav-link text-light">' . $brand_title . '</a></li>';
+                                }
+                            } else {
+                                echo '<li class="nav-item"><span class="nav-link text-light">Error fetching brands: ' . mysqli_error($con) . '</span></li>';
                             }
-                        } else {
-                            echo "Error fetching brands: " . mysqli_error($con);
-                        }
-                    ?>
+                        ?>
 
-                    <li class="nav-item">
-                        <a href="" class="nav-link text-light">Brand1</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="" class="nav-link text-light">Brand2</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="" class="nav-link text-light">Brand3</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="" class="nav-link text-light">Brand4</a>
-                    </li>
+                    </ul>
+
+
                 </ul>
 
                 <ul class="navbar-nav me-auto">
@@ -198,18 +157,26 @@ include('includes/connect.php')
                             <h4>Categories</h4>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="" class="nav-link text-light">category1</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="" class="nav-link text-light">category2</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="" class="nav-link text-light">category3</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="" class="nav-link text-light">category4</a>
-                    </li>
+
+                    <ul class="navbar-nav">
+
+                    <?php
+                        $select_categories = "SELECT category_id, category_title FROM categories"; 
+                        $result_categories = mysqli_query($con, $select_categories);
+
+                        if ($result_categories) {
+                            while ($row_data = mysqli_fetch_assoc($result_categories)) {
+                                $category_id = $row_data['category_id'];
+                                $category_title = $row_data['category_title'];
+                                echo '<li class="nav-item"><a href="index.php?category=' . $category_id . '" class="nav-link text-light">' . $category_title . '</a></li>';
+                            }
+                        } else {
+                            echo '<li class="nav-item"><span class="nav-link text-light">Error fetching categories: ' . mysqli_error($con) . '</span></li>';
+                        }
+                    ?>
+
+
+                    </ul>
                 </ul>
             </div>
         </div>
