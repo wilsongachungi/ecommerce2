@@ -91,7 +91,7 @@ include('includes/connect.php')
     <div class="col-md-10">
         <div class="row">
             <?php
-            $select_query = "SELECT * FROM `product_table`";
+            $select_query = "SELECT * FROM `product_table` order by rand() limit 0,9";
             $result_query = mysqli_query($con, $select_query);
 
             if ($result_query && mysqli_num_rows($result_query) > 0) {
