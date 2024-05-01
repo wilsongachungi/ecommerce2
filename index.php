@@ -1,5 +1,7 @@
 <?php
-include('includes/connect.php')
+include('includes/connect.php');
+include('functions/common_function.php');
+
 ?>
 
 <!DOCTYPE html>
@@ -11,11 +13,12 @@ include('includes/connect.php')
         width: 7%;
         height: 7%;
     }
-    .card-img-top{
-    width: 100%;
-    height: 150px;
-    object-fit: contain;
-}
+
+    .card-img-top {
+        width: 100%;
+        height: 150px;
+        object-fit: contain;
+    }
 
     .admin_img {
         width: 100px;
@@ -88,42 +91,13 @@ include('includes/connect.php')
         </div>
 
         <div class="row px-4">
-    <div class="col-md-10">
-        <div class="row">
-            <?php
-            $select_query = "SELECT * FROM `product_table` order by rand() limit 0,9";
-            $result_query = mysqli_query($con, $select_query);
-
-            if ($result_query && mysqli_num_rows($result_query) > 0) {
-                while ($row = mysqli_fetch_assoc($result_query)) {
-                    $product_id = $row['product_id'];
-                    $product_title = $row['product_title'];
-                    $product_description = $row['product_description'];
-                    $product_keywords = $row['product_keywords'];
-                    $product_image1 = $row['product_image1'];
-                    $product_price = $row['product_price'];
-                    $brand_id = $row['brand_id'];
-                    $category_id = $row['category_id'];
-
-                    echo "
-                    <div class='col-md-4 mb-2'>
-                        <div class='card'>
-                            <img class='card-img-top' src='./admin_area/product_images/$product_image1' alt='Card image cap'>
-                            <div class='card-body'>
-                                <h5 class='card-title'>$product_title</h5>
-                                <p>$product_description</p>
-                                <a href='#' class='btn btn-info'>Add to Cart</a>
-                                <a href='#' class='btn btn-secondary'>View More</a>
-                            </div>
-                        </div>
-                    </div>";
-                }
-            } else {
-                echo "<div class='col-md-12'><p>No products found</p></div>";
-            }
+            <div class="col-md-10">
+                <div class="row">
+                    <?php
+                getproducts();
             ?>
 
-                    
+
                 </div>
             </div>
             <div class="col-md-2 bg-secondary p-0">
@@ -135,18 +109,7 @@ include('includes/connect.php')
                     </li>
                     <ul class="navbar-nav">
                         <?php
-                            $select_brands = "SELECT brand_id, brand_title FROM brands"; 
-                            $result_brands = mysqli_query($con, $select_brands);
-
-                            if ($result_brands) {
-                                while ($row_data = mysqli_fetch_assoc($result_brands)) {
-                                    $brand_id = $row_data['brand_id'];
-                                    $brand_title = $row_data['brand_title'];
-                                    echo '<li class="nav-item"><a href="index.php?brand=' . $brand_id . '" class="nav-link text-light">' . $brand_title . '</a></li>';
-                                }
-                            } else {
-                                echo '<li class="nav-item"><span class="nav-link text-light">Error fetching brands: ' . mysqli_error($con) . '</span></li>';
-                            }
+                           getbrands();
                         ?>
 
                     </ul>
@@ -163,20 +126,9 @@ include('includes/connect.php')
 
                     <ul class="navbar-nav">
 
-                    <?php
-                        $select_categories = "SELECT category_id, category_title FROM categories"; 
-                        $result_categories = mysqli_query($con, $select_categories);
-
-                        if ($result_categories) {
-                            while ($row_data = mysqli_fetch_assoc($result_categories)) {
-                                $category_id = $row_data['category_id'];
-                                $category_title = $row_data['category_title'];
-                                echo '<li class="nav-item"><a href="index.php?category=' . $category_id . '" class="nav-link text-light">' . $category_title . '</a></li>';
-                            }
-                        } else {
-                            echo '<li class="nav-item"><span class="nav-link text-light">Error fetching categories: ' . mysqli_error($con) . '</span></li>';
-                        }
-                    ?>
+                        <?php
+                            getcategories();
+                        ?>
 
 
                     </ul>
