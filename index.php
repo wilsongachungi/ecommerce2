@@ -88,37 +88,40 @@ include('includes/connect.php')
         </div>
 
         <div class="row px-4">
-            <div class="col-md-10">
-                <div class="row">
+    <div class="col-md-10">
+        <div class="row">
+            <?php
+            $select_query = "SELECT * FROM `product_table`";
+            $result_query = mysqli_query($con, $select_query);
 
-                <?php
-                    $select_query="select *from `product_table`";
-                    $result_query=mysqli_query($con,$select_query);
-                    $row=mysqli_fetch_assoc($result_query);
-                   
-                    while($row=mysqli_fetch_assoc($result_query)){
-                        $product_id=$row['product_id'];
-                        $product_title=$row['product_title'];
-                        $product_description=$row['product_description'];
-                        $product_keywords=$row['product_keywords'];
-                        $product_image1=$row['product_image1'];
-                        $product_price=$row['product_price'];
-                        $brand_id=$row['brand_id'];
-                        $category_id=$row['category_id'];
-                        echo "  <div class='col-md-4 mb-2'>
-                       
+            if ($result_query && mysqli_num_rows($result_query) > 0) {
+                while ($row = mysqli_fetch_assoc($result_query)) {
+                    $product_id = $row['product_id'];
+                    $product_title = $row['product_title'];
+                    $product_description = $row['product_description'];
+                    $product_keywords = $row['product_keywords'];
+                    $product_image1 = $row['product_image1'];
+                    $product_price = $row['product_price'];
+                    $brand_id = $row['brand_id'];
+                    $category_id = $row['category_id'];
+
+                    echo "
+                    <div class='col-md-4 mb-2'>
                         <div class='card'>
                             <img class='card-img-top' src='./admin_area/product_images/$product_image1' alt='Card image cap'>
                             <div class='card-body'>
                                 <h5 class='card-title'>$product_title</h5>
-                                <p> $product_description.</p>
+                                <p>$product_description</p>
                                 <a href='#' class='btn btn-info'>Add to Cart</a>
                                 <a href='#' class='btn btn-secondary'>View More</a>
                             </div>
                         </div>
                     </div>";
-                    }
-                ?>
+                }
+            } else {
+                echo "<div class='col-md-12'><p>No products found</p></div>";
+            }
+            ?>
 
                     
                 </div>

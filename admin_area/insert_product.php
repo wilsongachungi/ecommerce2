@@ -2,14 +2,12 @@
 include('../includes/connect.php');
 
 if(isset($_POST['insert_product'])){
-
-   
     // Retrieve form data
     $product_title = $_POST['product_title'];
     $product_description = $_POST['product_description'];
     $product_keywords = $_POST['product_keywords'];
-    $product_category = $_POST['category_id'];
-    $product_brand = $_POST['product_brand'];
+    $product_category = $_POST['product_category'];
+    $product_brand = $_POST['product_brand']; 
     $product_price = $_POST['product_price'];
     $product_status = 'true';
 
@@ -22,10 +20,36 @@ if(isset($_POST['insert_product'])){
     $temp_image2 = $_FILES['product_image2']['tmp_name'];
     $temp_image3 = $_FILES['product_image3']['tmp_name'];
 
-    // Check if required fields are empty
-    if($product_title == '' || $product_description == '' || $product_category == '' || $product_brand == '' || $product_image1 == '' ||
-     $product_image2 == '' || $product_image3 == '') {
-        echo "<script>alert('Please fill all the available fields')</script>";
+    // Check if any required fields are empty
+    $empty_fields = [];
+    if(empty($product_title)) {
+        $empty_fields[] = 'Product Title';
+    }
+    if(empty($product_description)) {
+        $empty_fields[] = 'Product Description';
+    }
+    if(empty($product_keywords)) {
+        $empty_fields[] = 'Product Keywords';
+    }
+    if(empty($product_category)) {
+        $empty_fields[] = 'fill Category';
+    }
+    if(empty($product_brand)) {
+        $empty_fields[] = 'Brand';
+    }
+    if(empty($product_image1)) {
+        $empty_fields[] = 'Product Image 1';
+    }
+    if(empty($product_image2)) {
+        $empty_fields[] = 'Product Image 2';
+    }
+    if(empty($product_image3)) {
+        $empty_fields[] = 'Product Image 3';
+    }
+
+    if(!empty($empty_fields)) {
+        $error_message = "Please fill the following fields: " . implode(', ', $empty_fields);
+        echo "<script>alert(\"$error_message\")</script>";
     } else {
         // Move uploaded files to destination directory
         move_uploaded_file($temp_image1, "./product_images/$product_image1");
@@ -35,11 +59,11 @@ if(isset($_POST['insert_product'])){
         // Insert data into database
         $insert_products = "INSERT INTO `product_table` 
                             (`product_title`, `product_description`, `product_keywords`, `category_id`, 
-                             `brand_id`, `product_price`, `product_image1`, `product_image2`, `product_image3`, 
+                             `brand_id`, `product_image1`, `product_image2`, `product_image3`,`product_price`, 
                              `date`, `status`) 
                             VALUES 
                             ('$product_title', '$product_description', '$product_keywords', '$product_category', 
-                             '$product_brand', '$product_price', '$product_image1', '$product_image2', '$product_image3', 
+                             '$product_brand', '$product_image1', '$product_image2', '$product_image3', '$product_price', 
                              NOW(), '$product_status')";
 
         $result_query = mysqli_query($con, $insert_products);
@@ -52,6 +76,7 @@ if(isset($_POST['insert_product'])){
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -89,10 +114,10 @@ if(isset($_POST['insert_product'])){
             <br>
 
             <div class="form-outline mb-4 w-50 m-auto">
-                <select class="form-select" name="category_id">
+                <select class="form-select" name="product_category">
                     <option selected>Select Category</option>
                     <?php
-                        $select_query = "SELECT category_title, category_title FROM categories"; 
+                        $select_query = "SELECT category_id, category_title FROM categories"; 
                         $result_query = mysqli_query($con, $select_query);
 
                         if ($result_query && mysqli_num_rows($result_query) > 0) {
