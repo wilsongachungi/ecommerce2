@@ -3,6 +3,9 @@
 
     function getproducts(){
         global $con;
+        if(!isset($_GET['category'])){
+            if(!isset($_GET['brand'])){
+
         $select_query = "SELECT * FROM `product_table` order by rand() limit 0,9";
         $result_query = mysqli_query($con, $select_query);
 
@@ -35,7 +38,12 @@
             echo "<div class='col-md-12'><p>No products found</p></div>";
         }
     }
+}
+}
 
+    function get_unique-categories(){
+        if(isset($_GET['category']))
+    }
     function getbrands(){
         global $con;
         $select_brands = "SELECT brand_id, brand_title FROM brands"; 
