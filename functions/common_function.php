@@ -29,7 +29,7 @@
                             <p>$product_description</p>
                             <p>KSH$product_price</p>
                             <a href='#' class='btn btn-info'>Add to Cart</a>
-                            <a href='#' class='btn btn-secondary'>View More</a>
+                            <a href='product_details.php?product_id=$product_id' class='btn btn-secondary'>View More</a>
                         </div>
                     </div>
                 </div>";
@@ -73,7 +73,8 @@ function get_unique_categories(){
                         <p>$product_description</p>
                         <p>KSH$product_price</p>
                         <a href='#' class='btn btn-info'>Add to Cart</a>
-                        <a href='#' class='btn btn-secondary'>View More</a>
+                        <a href='product_details.php?product_id=$product_id' class='btn btn-secondary'>View
+                                    More</a>
                     </div>
                 </div>
             </div>";
@@ -114,7 +115,8 @@ function get_unique_brands(){
                         <p>$product_description</p>
                         <p>KSH$product_price</p>
                         <a href='#' class='btn btn-info'>Add to Cart</a>
-                        <a href='#' class='btn btn-secondary'>View More</a>
+                        <a href='product_details.php?product_id=$product_id' class='btn btn-secondary'>View
+                        More</a>
                     </div>
                 </div>
             </div>";
@@ -169,15 +171,19 @@ function get_unique_brands(){
     }
 
     //searching products
-    
+
     function search_product(){
         global $con;
         if(isset($_GET['search_data_product'])){
             $search_data_value=$_GET['search_data'];
       
      
-        $search_query = "SELECT * FROM product_table WHERE product_keywords LIKE '%value%'";
+        $search_query = "SELECT * FROM product_table WHERE product_keywords LIKE '%$search_data_value%'";
         $result_query = mysqli_query($con, $search_query);
+        $num_of_rows=mysqli_num_rows($result_query);
+    if($num_of_rows==0){
+        echo"<h3 class='text-center text-danger'>No result found!!</h2>";
+    }
 
         if ($result_query && mysqli_num_rows($result_query) > 0) {
             while ($row = mysqli_fetch_assoc($result_query)) {
@@ -199,7 +205,8 @@ function get_unique_brands(){
                             <p>$product_description</p>
                             <p>KSH$product_price</p>
                             <a href='#' class='btn btn-info'>Add to Cart</a>
-                            <a href='#' class='btn btn-secondary'>View More</a>
+                            <a href='product_details.php?product_id=$product_id' class='btn btn-secondary'>View
+                                    More</a>
                         </div>
                     </div>
                 </div>";
@@ -208,4 +215,59 @@ function get_unique_brands(){
     }
 }
 
+//view details
+function view_details(){
+    global $con;
+    if(isset($_GET['product_id']))
+        if(!isset($_GET['category'])){
+            if(!isset($_GET['brand'])){
+        $product_id=$_GET['product_id'];
+        $select_query = "SELECT * FROM `product_table` where product_id=$product_id";
+        $result_query = mysqli_query($con, $select_query);
+
+        if ($result_query && mysqli_num_rows($result_query) > 0) {
+            while ($row = mysqli_fetch_assoc($result_query)) {
+                $product_id = $row['product_id'];
+                $product_title = $row['product_title'];
+                $product_description = $row['product_description'];
+                $product_keywords = $row['product_keywords'];
+                $product_image1 = $row['product_image1'];
+                $product_image2 = $row['product_image2'];
+                $product_image3 = $row['product_image3'];
+                $product_price = $row['product_price'];
+                $brand_id = $row['brand_id'];
+                $category_id = $row['category_id'];
+
+                echo "
+                <div class='col-md-4 mb-2'>
+                    <div class='card'>
+                        <img class='card-img-top' src='./admin_area/product_images/$product_image1' alt='Card image cap'>
+                        <div class='card-body'>
+                            <h5 class='card-title'>$product_title</h5>
+                            <p>$product_description</p>
+                            <p>KSH$product_price</p>
+                            <a href='#' class='btn btn-info'>Add to Cart</a>
+                            <a href='product_details.php?product_id=$product_id' class='btn btn-secondary'>View More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class='col-md-8'>
+                <div class='row'>
+                    <div class='col-md-12'>
+                        <h4 class='text-center text-info mb-5'>Related Products</h4>
+                    </div>
+                    <div class='col-md-6'>
+                        <img class='card-img-top' src='./img/apple.jpeg' alt='Card image cap'>
+                    </div>
+                    <div class='col-md-6'>
+                        <img class='card-img-top' src='./img/apple.jpeg' alt='Card image cap'>
+                    </div>
+                </div>
+            </div>";
+            }
+        }
+    }
+}
+}
+            
 ?>

@@ -65,8 +65,9 @@ include('functions/common_function.php');
                         <a class="nav-link" href="#">Total Price:100</a>
                     </li>
                 </ul>
-                <form class="form-inline my-2 my-lg-0"  action="search_product.php" method="get">
-                    <input class="form-control mr-sm-2" type="search" name="search_data" placeholder="Search" aria-label="Search">
+                <form class="form-inline my-2 my-lg-0" action="search_product.php" method="get">
+                    <input class="form-control mr-sm-2" type="search" name="search_data" placeholder="Search"
+                        aria-label="Search">
                     <input type="submit" value="search" name="search_data_product" class="btn btn-outline-light">
                 </form>
             </div>
@@ -93,11 +94,17 @@ include('functions/common_function.php');
         <div class="row px-4">
             <div class="col-md-10">
                 <div class="row">
-                <?php
-                    search_product();
-                    get_unique_categories();
-                    get_unique_brands();
-                ?>
+                   
+
+                    
+                        <div class="row">
+                         
+
+                    <?php
+                        view_details();
+                        get_unique_categories();
+                        get_unique_brands();
+                     ?>
 
 
                 </div>
