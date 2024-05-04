@@ -66,11 +66,16 @@ include('functions/common_function.php');
                     </li>
                 </ul>
                 <form class="form-inline my-2 my-lg-0" action="search_product.php" method="get">
-                    <input class="form-control mr-sm-2" type="search" name="search_data" placeholder="Search" aria-label="Search">
+                    <input class="form-control mr-sm-2" type="search" name="search_data" placeholder="Search"
+                        aria-label="Search">
                     <input type="submit" value="search" name="search_data_product" class="btn btn-outline-light">
                 </form>
             </div>
         </nav>
+
+        <?php
+            cart();
+        ?>
 
         <nav class="nav navbar navbar-expand-lg navbar-dark bg-secondary">
             <ul class="navbar-nav me-auto">
@@ -93,11 +98,14 @@ include('functions/common_function.php');
         <div class="row px-4">
             <div class="col-md-10">
                 <div class="row">
-                <?php
-                    getproducts();
-                    get_unique_categories();
-                    get_unique_brands();
-                ?>
+
+                    <?php
+                        getproducts();
+                        get_unique_categories();
+                        get_unique_brands();
+                        $ip = getIPAddress();  
+                        echo 'User Real IP Address - '.$ip;
+                   ?>
 
 
                 </div>
