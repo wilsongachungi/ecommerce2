@@ -109,7 +109,7 @@ include('functions/common_function.php');
                             <h4>Derivery brands</h4>
                         </a>
                     </li>
-                    <ul class="navbar-nav">
+                    <ul class="navbar-nav text-center">
                         <?php
                            getbrands();
                         ?>
@@ -122,7 +122,7 @@ include('functions/common_function.php');
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item bg-info text-center">
                         <a href="" class="nav-link text-light">
-                            <h4>Categories jhlxhlh</h4>
+                            <h4>Categories</h4>
                         </a>
                     </li>
 

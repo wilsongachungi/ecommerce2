@@ -97,7 +97,7 @@ include('functions/common_function.php');
                    
 
                     
-                        <div class="row">
+                        <!-- <div class="row"> -->
                          
 
                     <?php

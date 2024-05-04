@@ -34,9 +34,7 @@
                     </div>
                 </div>";
             }
-        } else {
-            echo "<div class='col-md-12'><p>No products found</p></div>";
-        }
+        } 
     }
 }
 }
@@ -127,7 +125,7 @@ function get_unique_brands(){
 
 
 
-    function getbrands(){
+function getbrands(){
         global $con;
         $select_brands = "SELECT brand_id, brand_title FROM brands"; 
         $result_brands = mysqli_query($con, $select_brands);
@@ -136,7 +134,7 @@ function get_unique_brands(){
             while ($row_data = mysqli_fetch_assoc($result_brands)) {
                 $brand_id = $row_data['brand_id'];
                 $brand_title = $row_data['brand_title'];
-                echo '<li class="nav-item"><a href="index.php?brand=' . $brand_id . '" class="nav-link text-light">' . $brand_title . '</a></li>';
+                echo '<li class="nav-item"><a href="index.php?brand=' . $brand_id . '" class="nav-link text-light text-center">' . $brand_title . '</a></li>';
             }
         } else {    $select_categories = "SELECT category_id, category_title FROM categories"; 
             $result_categories = mysqli_query($con, $select_categories);
@@ -145,7 +143,7 @@ function get_unique_brands(){
                 while ($row_data = mysqli_fetch_assoc($result_categories)) {
                     $category_id = $row_data['category_id'];
                     $category_title = $row_data['category_title'];
-                    echo '<li class="nav-item"><a href="index.php?category=' . $category_id . '" class="nav-link text-light">' . $category_title . '</a></li>';
+                    echo '<li class="nav-item"><a href="index.php?category=' . $category_id . '" class="nav-link text-light text-center">' . $category_title . '</a></li>';
                 }
             } else {
                 echo '<li class="nav-item"><span class="nav-link text-light">Error fetching categories: ' . mysqli_error($con) . '</span></li>';
@@ -163,7 +161,7 @@ function get_unique_brands(){
             while ($row_data = mysqli_fetch_assoc($result_categories)) {
                 $category_id = $row_data['category_id'];
                 $category_title = $row_data['category_title'];
-                echo '<li class="nav-item"><a href="index.php?category=' . $category_id . '" class="nav-link text-light">' . $category_title . '</a></li>';
+                echo '<li class="nav-item"><a href="index.php?category=' . $category_id . '" class="nav-link text-light text-center">' . $category_title . '</a></li>';
             }
         } else {
             echo '<li class="nav-item"><span class="nav-link text-light">Error fetching categories: ' . mysqli_error($con) . '</span></li>';
@@ -181,9 +179,9 @@ function get_unique_brands(){
         $search_query = "SELECT * FROM product_table WHERE product_keywords LIKE '%$search_data_value%'";
         $result_query = mysqli_query($con, $search_query);
         $num_of_rows=mysqli_num_rows($result_query);
-    if($num_of_rows==0){
-        echo"<h3 class='text-center text-danger'>No result found!!</h2>";
-    }
+        if($num_of_rows==0){
+            echo"<h3 class='text-center text-danger'>No result found!!</h2>";
+        }
 
         if ($result_query && mysqli_num_rows($result_query) > 0) {
             while ($row = mysqli_fetch_assoc($result_query)) {
@@ -257,10 +255,10 @@ function view_details(){
                         <h4 class='text-center text-info mb-5'>Related Products</h4>
                     </div>
                     <div class='col-md-6'>
-                        <img class='card-img-top' src='./img/apple.jpeg' alt='Card image cap'>
+                    <img class='card-img-top' src='./admin_area/product_images/$product_image2' alt='Card image cap'>
                     </div>
                     <div class='col-md-6'>
-                        <img class='card-img-top' src='./img/apple.jpeg' alt='Card image cap'>
+                    <img class='card-img-top' src='./admin_area/product_images/$product_image3' alt='Card image cap'>
                     </div>
                 </div>
             </div>";
