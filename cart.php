@@ -135,11 +135,11 @@ include('functions/common_function.php');
                                          }
                                         ?>
                                         <td> <?php echo $product_values ?></td>
-                                        <td><input type="checkbox"></td>
+                                        <td><input type="checkbox" name="removeitem[]" value="<?php echo $product_id ?>"></td>
                                         <td>
                                             <!-- <button >Update</button> -->
                                             <input class="bg-info px-3 py-2 text-light mx-2 border-0" name="update_cart" type="submit" value="Update Cart">
-                                            <button class="bg-info px-3 py-2 text-light border-0">Remove</button>
+                                            <input class="bg-info px-3 py-2 text-light mx-2 border-0" name="remove_cart" type="submit" value="Remove Cart">
                                         </td>
                                     </tr>
                             <?php
@@ -157,6 +157,24 @@ include('functions/common_function.php');
 
             </div>
             </form>
+
+            <?php
+            function remove_cart_item(){
+                global $con;
+                if(isset($_POST['remove_cart'])){
+                    foreach($_POST['removeitem'] as $remove_id){
+                        echo $remove_id;
+                        $delete_query="Delete from `cart_details` where product_id=$remove_id";
+                        $run_delete=mysqli_query($con,$delete_query);
+                        if($run_delete){
+                            echo "<script>window.open('cart.php','_self'</script>";
+                        }
+                    }
+                }
+            }
+            echo $remove_item = remove_cart_item();
+            ?>
+
         </div>
 
 
