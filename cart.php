@@ -9,21 +9,21 @@ include('functions/common_function.php');
 
 <head>
     <style>
-    .logo {
-        width: 7%;
-        height: 7%;
-    }
+        .logo {
+            width: 7%;
+            height: 7%;
+        }
 
-    .card-img-top {
-        width: 100%;
-        height: 150px;
-        object-fit: contain;
-    }
+        .card-img-top {
+            width: 100%;
+            height: 150px;
+            object-fit: contain;
+        }
 
-    .admin_img {
-        width: 100px;
-        object-fit: contain;
-    }
+        .admin_img {
+            width: 100px;
+            object-fit: contain;
+        }
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,8 +38,7 @@ include('functions/common_function.php');
     <div class="container-fluid p-0">
         <nav class="navbar navbar-expand-lg navbar-light bg-info">
             <img src="./img/shopping.jpeg" alt="" class="logo">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -58,17 +57,16 @@ include('functions/common_function.php');
                         <a class="nav-link" href="#">Contact</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="cart.php"><i class="fa fa-shopping-cart"
-                                aria-hidden="true"></i> <sup class="text-danger"><?php  cart_item() ?></sup></a>
+                        <a class="nav-link" href="cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i> <sup class="text-danger"><?php cart_item() ?></sup></a>
                     </li>
-                    
+
                 </ul>
-                
+
             </div>
         </nav>
 
         <?php
-            cart();
+        cart();
         ?>
 
         <nav class="nav navbar navbar-expand-lg navbar-dark bg-secondary">
@@ -98,32 +96,56 @@ include('functions/common_function.php');
                         <th>Quantity</th>
                         <th>Total Price</th>
                         <th>Remove</th>
-                        <th>Operations</th>
+                        <th colspan="2">Operations</th>
                     </thead>
                     <tbody>
+                        <?php
+                        global $con;
+                        $total_price = 0;
+                        $get_ip_address = getIPAddress();
+                        $cart_query = "SELECT * FROM `cart_details` WHERE ip_address = '$get_ip_address'";
+                        $result = mysqli_query($con, $cart_query);
+                        while ($row = mysqli_fetch_array($result)) {
+                            $product_id = $row['product_id'];
+                            $select_products = "SELECT * FROM `product_table` WHERE product_id = '$product_id'";
+                            $result_products = mysqli_query($con, $select_products);
+                            while ($row_product_price = mysqli_fetch_array($result_products)) {
+                                $product_price = array($row_product_price['product_price']);
+                                $price_table = $row_product_price['product_price'];
+                                $product_title = $row_product_price['product_title'];
+                                $product_image1 = $row_product_price['product_image1'];
+                                $product_values = array_sum($product_price);
+                                $total_price += $product_values;
+                           
+
+                        ?>
                         <tr>
-                            <td>Desktop</td>
-                            <td><img src="./img/apple.jpeg" alt=""></td>
-                            <td><input type="text"></td>
-                            <td>90000</td>
+                            <td><?php echo $product_title ?></td>
+                            <td><img style="width: 30%; height:30%; object-fit:contain" src="./admin_area/product_images/<?php echo $product_image1 ?>" alt=""></td>
+                            <td><input class="form-input w-50" type="text"></td>
+                            <td> <?php echo $product_values?></td>
                             <td><input type="checkbox"></td>
                             <td>
-                                <p>Update</p>
-                                <p>Remove</p>
+                                <button class="bg-info px-3 py-2 text-light mx-2 border-0">Update</button>
+                                <button class="bg-info px-3 py-2 text-light border-0">Remove</button>
                             </td>
                         </tr>
+                        <?php
+                         }
+                        }
+                        ?>
                     </tbody>
                 </table>
-                
+
                 <div class="d-flex mb-5">
-                    <h5 class="px-3">Subtotal:<strong class="text-info">5000</strong></h5>
+                    <h5 class="px-3">Subtotal: <strong class="text-info"><?php echo $total_price?></strong></h5>
                     <a href="index.php"><button class="bg-info px-3 py-2 mx-3 border-0">Continue shopping</button></a>
-                    <a href="#"><button class="bg-info px-3 py-2 border-0">Checkout</button></a>
+                    <a href="#"><button class="bg-info px-3 py-2 text-light border-0">Checkout</button></a>
                 </div>
 
             </div>
         </div>
-        
+
 
         <div class="bg-info p-3 text-center">
             <p>All rights reserved</p>
