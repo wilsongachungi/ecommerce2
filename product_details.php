@@ -59,7 +59,7 @@ include('functions/common_function.php');
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#"><i class="fa fa-shopping-cart"
-                                aria-hidden="true"></i><sup>1</sup></a>
+                                aria-hidden="true"></i><sup><?php  cart_item() ?></sup></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Total Price:100</a>

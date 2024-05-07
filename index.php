@@ -62,7 +62,7 @@ include('functions/common_function.php');
                                 aria-hidden="true"></i><sup><?php  cart_item() ?></sup></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Total Price:100</a>
+                        <a class="nav-link" href="#"><?php total_cart_price() ?></a>
                     </li>
                 </ul>
                 <form class="form-inline my-2 my-lg-0" action="search_product.php" method="get">
