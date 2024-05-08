@@ -1,7 +1,5 @@
 <?php
 include('includes/connect.php');
-include('functions/common_function.php');
-
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +25,7 @@ include('functions/common_function.php');
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ecommerce Website</title>
+    <title>Checkout page</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="style.css">
@@ -57,25 +55,12 @@ include('functions/common_function.php');
                     <li class="nav-item">
                         <a class="nav-link" href="#">Contact</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="cart.php"><i class="fa fa-shopping-cart"
-                                aria-hidden="true"></i> <sup class="text-danger"><?php  cart_item() ?></sup></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link " href="#">Total Price:<span style="color:black"> <?php Total_cart_price() ?>/-</span></a>
-                    </li>
+                 
                 </ul>
-                <form class="form-inline my-2 my-lg-0" action="search_product.php" method="get">
-                    <input class="form-control mr-sm-2" type="search" name="search_data" placeholder="Search"
-                        aria-label="Search">
-                    <input type="submit" value="search" name="search_data_product" class="btn btn-outline-light">
-                </form>
+          
             </div>
         </nav>
 
-        <?php
-            cart();
-        ?>
 
         <nav class="nav navbar navbar-expand-lg navbar-dark bg-secondary">
             <ul class="navbar-nav me-auto">
@@ -95,57 +80,19 @@ include('functions/common_function.php');
             </p>
         </div>
 
-        <div class="row px-4">
-            <div class="col-md-10">
-                <div class="row">
-
-                    <?php
-                        getproducts();
-                        get_unique_categories();
-                        get_unique_brands();
-                        $ip = getIPAddress();  
-                        echo 'User Real IP Address - '.$ip;
-                   ?>
-
-
-                </div>
+    <div class="row px-1">
+       <div class="col-md-12">
+            <div class="row">
+                <?php
+                if(!isset($_SESSION['username'])){
+                    include('users_area/user_login.php');
+                }else{
+                    include('payment.php');
+                }
+                ?>
             </div>
-            <div class="col-md-2 bg-secondary p-0">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item bg-info text-center">
-                        <a href="" class="nav-link text-light">
-                            <h4>Derivery brands</h4>
-                        </a>
-                    </li>
-                    <ul class="navbar-nav text-center">
-                        <?php
-                           getbrands();
-                        ?>
-
-                    </ul>
-
-
-                </ul>
-
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item bg-info text-center">
-                        <a href="" class="nav-link text-light">
-                            <h4>Categories</h4>
-                        </a>
-                    </li>
-
-                    <ul class="navbar-nav">
-
-                        <?php
-                            getcategories();
-
-                        ?>
-
-
-                    </ul>
-                </ul>
-            </div>
-        </div>
+       </div>
+    </div>
 
         <div class="bg-info p-3 text-center">
             <p>All rights reserved</p>
